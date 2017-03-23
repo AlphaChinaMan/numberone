@@ -14,7 +14,7 @@ import com.example.socialapp.R;
  * Created by 陈梦轩 on 2017/3/22.
  */
 
-public class FragmSetActivity extends Fragment {
+public class SetFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

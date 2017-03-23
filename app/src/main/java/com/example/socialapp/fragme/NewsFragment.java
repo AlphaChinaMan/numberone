@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.socialapp.R;
 import com.example.socialapp.adapte.NewsAdapter;
@@ -21,7 +22,7 @@ import java.util.List;
  * Created by 陈梦轩 on 2017/3/22.
  */
 
-public class FramnewsActivity extends Fragment {
+public class NewsFragment extends Fragment {
     LinearLayoutManager llm;
     private List<info> list = new ArrayList<>();
 private NewsAdapter adapter;
@@ -55,7 +56,6 @@ private NewsAdapter adapter;
         llm=new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(llm);
         recyclerView.setAdapter(adapter);
-
 
     }
 }

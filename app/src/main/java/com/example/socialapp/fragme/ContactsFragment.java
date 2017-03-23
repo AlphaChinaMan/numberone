@@ -14,7 +14,7 @@ import com.example.socialapp.R;
  * Created by 陈梦轩 on 2017/3/22.
  */
 
-public class FragmContactsActivity extends Fragment {
+public class ContactsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

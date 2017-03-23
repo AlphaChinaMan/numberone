@@ -7,4 +7,6 @@
     <string name="news">消息</string>
     <string name="contacts_main">联系人</string>
     <string name="set">设置</string>
+    <string name="content_liao">请输入...</string>
+    <string name="send">发送</string>
 </resources>
