@@ -5,58 +5,69 @@ package com.example.socialapp.ben;
  */
 
 public class info {
-    private String name;
+    //接收
+    String receiveAvatar;
+    String receiveContent;
+    //时间
+    String chatTime;
+    //发送
+    String sendAvatar;
+    String sendContent;
 
-    private  String content;
-    private  String time;
-private  String wei;
-
-    public info(String name, String content, String time, String wei) {
-        this.name = name;
-        this.content = content;
-        this.time = time;
-        this.wei = wei;
+int type;
+    public info(String receiveAvatar, String receiveContent, String chatTime, String sendAvatar, String sendContent) {
+        this.receiveAvatar = receiveAvatar;
+        this.receiveContent = receiveContent;
+        this.chatTime = chatTime;
+        this.sendAvatar = sendAvatar;
+        this.sendContent = sendContent;
     }
 
-    public String getName() {
-        return name;
+    public String getReceiveAvatar() {
+        return receiveAvatar;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setReceiveAvatar(String receiveAvatar) {
+        this.receiveAvatar = receiveAvatar;
     }
 
-    public String getContent() {
-        return content;
+    public String getReceiveContent() {
+        return receiveContent;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setReceiveContent(String receiveContent) {
+        this.receiveContent = receiveContent;
     }
 
-    public String getTime() {
-        return time;
+    public String getChatTime() {
+        return chatTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setChatTime(String chatTime) {
+        this.chatTime = chatTime;
     }
 
-    public String getWei() {
-        return wei;
+    public String getSendAvatar() {
+        return sendAvatar;
     }
 
-    public void setWei(String wei) {
-        this.wei = wei;
+    public void setSendAvatar(String sendAvatar) {
+        this.sendAvatar = sendAvatar;
     }
 
-    @Override
-    public String toString() {
-        return "info{" +
-                "name='" + name + '\'' +
-                ", content='" + content + '\'' +
-                ", time='" + time + '\'' +
-                ", wei='" + wei + '\'' +
-                '}';
+    public String getSendContent() {
+        return sendContent;
+    }
+
+    public void setSendContent(String sendContent) {
+        this.sendContent = sendContent;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

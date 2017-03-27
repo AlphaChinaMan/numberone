@@ -72,8 +72,8 @@ public class HomepageActivity extends AppCompatActivity implements View.OnClickL
         fsa = new SetFragment();
         fna = new NewsFragment();
         list.add(fca);
-        list.add(fsa);
         list.add(fna);
+        list.add(fsa);
     }
 
 
@@ -84,10 +84,10 @@ public class HomepageActivity extends AppCompatActivity implements View.OnClickL
                 viewPager.setCurrentItem(0);
                 break;
             case R.id.aa_news:
-                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(1);
                 break;
             case R.id.aa_set:
-                viewPager.setCurrentItem(1);
+                viewPager.setCurrentItem(2);
                 break;
         }
     }

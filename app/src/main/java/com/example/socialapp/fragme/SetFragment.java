@@ -6,8 +6,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.socialapp.R;
+import com.hyphenate.chat.EMChatManager;
+import com.hyphenate.chat.adapter.EMACallManager;
 
 /**
  * 设置页
@@ -15,13 +19,18 @@ import com.example.socialapp.R;
  */
 
 public class SetFragment extends Fragment {
+    private LinearLayout LinearLayout;
+    private TextView mUserTV;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.layout_set_fragment, container, false);
-    }
+   View view=   inflater.inflate(R.layout.layout_set_fragment, container, false);
 
+
+
+        return view;
+    }
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
