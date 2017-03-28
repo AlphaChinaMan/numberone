@@ -1,5 +1,6 @@
 package com.example.socialapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,9 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.TimeUtils;
+
+import com.example.socialapp.R;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -17,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.socialapp.act.HomepageActivity;
 import com.example.socialapp.act.RegisterActivity;
+import com.example.socialapp.view.TestDialog;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 
@@ -28,17 +33,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText account_edit, password_edit;
     private Button land_main, register_main;
     private CheckBox checkBox_main;
+    private TestDialog cd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+//        //
+//        ProgressDialog  progressDialog=new ProgressDialog(this);
+//        progressDialog.setIndeterminate(false);
+//        progressDialog.setCanceledOnTouchOutside(false);
+//        progressDialog.setMessage("加载中");
+        cd = new TestDialog(this, R.style.CustomDialog);
 
 
     }
 
     private void init() {
-        checkBox_main= (CheckBox) findViewById(R.id.checkBox_main);
+        checkBox_main = (CheckBox) findViewById(R.id.checkBox_main);
         account_edit = (EditText) findViewById(R.id.account_edit);
         password_edit = (EditText) findViewById(R.id.password_edit);
         land_main = (Button) findViewById(R.id.land_main);
@@ -48,10 +61,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         checkBox_main.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     checkBox_main.setChecked(true);
                     password_edit.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                }  else{
+                } else {
                     checkBox_main.setChecked(false);
                     password_edit.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
@@ -73,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("main", "登录聊天服务器成功！");
                 Intent intent = new Intent(MainActivity.this, HomepageActivity.class);
                 startActivity(intent);
+                cd.cancel();
             }
 
             @Override
@@ -83,7 +97,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onError(int code, String message) {
                 Log.d("main", "登录聊天服务器失败！");
+                cd.cancel();
             }
+
+
         });
 
     }
@@ -92,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.land_main:
+                cd.show();
                 //拿到输入框中的的输入内容
                 String name = account_edit.getText().toString();
                 String password = password_edit.getText().toString();

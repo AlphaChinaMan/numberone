@@ -12,9 +12,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.socialapp.R;
-import com.example.socialapp.fragme.ContactsFragment;
+import com.example.socialapp.fragme.NewssFragment;
 import com.example.socialapp.fragme.SetFragment;
-import com.example.socialapp.fragme.NewsFragment;
+import com.example.socialapp.fragme.ContactsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +26,8 @@ import java.util.List;
 
 public class HomepageActivity extends AppCompatActivity implements View.OnClickListener {
     private FragmentManager fm;
+    private NewssFragment fna;
     private ContactsFragment fca;
-    private NewsFragment fna;
     private SetFragment fsa;
     private ViewPager viewPager;
     private List<Fragment> list = new ArrayList<Fragment>();
@@ -68,11 +68,11 @@ public class HomepageActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void add2List() {
-        fca = new ContactsFragment();
+        fna = new NewssFragment();
         fsa = new SetFragment();
-        fna = new NewsFragment();
-        list.add(fca);
+        fca = new ContactsFragment();
         list.add(fna);
+        list.add(fca);
         list.add(fsa);
     }
 
@@ -81,10 +81,10 @@ public class HomepageActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.aa_contacts:
-                viewPager.setCurrentItem(0);
+                viewPager.setCurrentItem(1);
                 break;
             case R.id.aa_news:
-                viewPager.setCurrentItem(1);
+                viewPager.setCurrentItem(0);
                 break;
             case R.id.aa_set:
                 viewPager.setCurrentItem(2);

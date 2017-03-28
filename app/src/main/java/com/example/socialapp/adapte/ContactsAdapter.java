@@ -5,14 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.socialapp.R;
 import com.example.socialapp.ben.info;
-import com.hyphenate.chat.EMMessage;
 
 import java.util.List;
 
@@ -20,11 +17,11 @@ import java.util.List;
  * Created by 陈梦轩 on 2017/3/23.
  */
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyVieqHolder> {
+public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyVieqHolder> {
     private List<info> list;
     private Context context;
 
-    public NewsAdapter(Context context, List<info> list) {
+    public ContactsAdapter(Context context, List<info> list) {
         super();
         this.context = context;
         this.list = list;
@@ -32,7 +29,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyVieqHolder> 
 
     @Override
     public MyVieqHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_news_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_conts_item, parent, false);
         MyVieqHolder mvh = new MyVieqHolder(view);
         return mvh;
     }
