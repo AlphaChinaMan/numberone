@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        progressDialog.setIndeterminate(false);
 //        progressDialog.setCanceledOnTouchOutside(false);
 //        progressDialog.setMessage("加载中");
+        //留一份 加载进程
         cd = new TestDialog(this, R.style.CustomDialog);
 
 
