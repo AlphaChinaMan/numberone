@@ -14,8 +14,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.socialapp.R;
-import com.example.socialapp.act.PrivateMessageActivity;
 import com.example.socialapp.adapte.CharlistAdapter;
+import com.example.socialapp.inface.ListitemonClick;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMConversationListener;
@@ -34,14 +34,13 @@ import java.util.Map;
  * Created by 陈梦轩 on 2017/3/22.
  */
 
-public class NewssFragment extends Fragment implements EMCallBack, EMConversationListener, EMConnectionListener, View.OnClickListener, AdapterView.OnItemLongClickListener, AdapterView.OnItemClickListener {
+public class NewssFragment extends Fragment implements EMCallBack, EMConversationListener, View.OnClickListener, AdapterView.OnItemLongClickListener,ListitemonClick {
     private Button send_news, exits_news;
     List<EMConversation> list = new ArrayList<EMConversation>();
     private EditText name_news, contents_news;
     private ListView listView_news;
     private CharlistAdapter cla;
     private View rootView;
-    private View connection_lay;
 
     @Nullable
     @Override
@@ -60,14 +59,14 @@ public class NewssFragment extends Fragment implements EMCallBack, EMConversatio
     }
 
     private void initView() {
-        connection_lay = rootView.findViewById(R.id.Connection_lay);
+
         send_news = (Button) rootView.findViewById(R.id.send_news);
         exits_news = (Button) rootView.findViewById(R.id.exits_news);
         name_news = (EditText) rootView.findViewById(R.id.name_news);
         contents_news = (EditText) rootView.findViewById(R.id.contents_news);
         listView_news = (ListView) rootView.findViewById(R.id.list_news1);
         send_news.setOnClickListener(this);
-        listView_news.setOnItemClickListener(this);
+//        listView_news.setOnItemClickListener(this);
         listView_news.setOnItemLongClickListener(this);
 
     }
@@ -99,37 +98,13 @@ public class NewssFragment extends Fragment implements EMCallBack, EMConversatio
         EMClient.getInstance().chatManager().sendMessage(message);
     }
 
-    // 与环信服务器断开后 调用
-    @Override
-    public void onDisconnected(int arg0) {
-        // TODO Auto-generated method stub
-        // 运行UI线程
-        getActivity().runOnUiThread(new Runnable() {
-            public void run() {
-                // 提示 连接已断开
-                Toast.makeText(getActivity(), "网络连接已断开", Toast.LENGTH_SHORT).show();
-                // 给connection_lay控件 可见状态 设置 状态为可见
-                connection_lay.setVisibility(View.VISIBLE);
-            }
-        });
-    }    // 与环信服务器连接成功后 调用
 
-    @Override
-    public void onConnected() {
-        // TODO Auto-generated method stub
-        // 运行UI线程
-        getActivity().runOnUiThread(new Runnable() {
-            public void run() {
-                // 给connection_lay控件 可见状态 设置为 完全隐藏消失
-                connection_lay.setVisibility(View.GONE);
-            }
-        });
-    }
 
-    private void intestTo(Class<?> cls) {
-        Intent intent = new Intent(getActivity(), cls);
-        getActivity().startActivity(intent);
-    }
+
+//    private void intestTo(Class<?> cls) {
+//        Intent intent = new Intent(getActivity(), cls);
+//        getActivity().startActivity(intent);
+//    }
 
     @Override
     public void onClick(View v) {
@@ -142,18 +117,18 @@ public class NewssFragment extends Fragment implements EMCallBack, EMConversatio
         }
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent i = new Intent(getActivity(), PrivateMessageActivity.class);
-        EMConversation emc = (EMConversation) cla.getItem(position);
-        if (emc.getType() == EMConversation.EMConversationType.GroupChat) {
-            i.putExtra("groupId", emc.getUserName());
-
-        } else {
-            i.putExtra("username", emc.getUserName());
-        }
-        startActivity(i);
-    }
+//    @Override
+//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//        Intent i = new Intent(getActivity(), PrivateMessageActivity.class);
+//        EMConversation emc = (EMConversation) cla.getItem(position);
+//        if (emc.getType() == EMConversation.EMConversationType.GroupChat) {
+//            i.putExtra("groupId", emc.getUserName());
+//
+//        } else {
+//            i.putExtra("username", emc.getUserName());
+//        }
+//        startActivity(i);
+//    }
 
     public void notifyList() {
         // TODO Auto-generated method stub
@@ -193,6 +168,7 @@ public class NewssFragment extends Fragment implements EMCallBack, EMConversatio
         initDate();
         cla = new CharlistAdapter(getActivity(), list);
         listView_news.setAdapter(cla);
+        cla.setListitemonClick(this);
     }
 
     ;
@@ -230,4 +206,12 @@ public class NewssFragment extends Fragment implements EMCallBack, EMConversatio
         };
         Collections.sort(list, comp);
     }
+
+    @Override
+    public void OnlistitemClick(int id) {
+
+     //   ((BaseActivity)getActivity()).IntoPrivateMessage(list.get(id).getUserName());
+    }
+
+
 }

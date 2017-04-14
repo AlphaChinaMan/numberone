@@ -12,6 +12,8 @@ import android.util.TimeUtils;
 
 import com.example.socialapp.R;
 
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -47,8 +49,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        progressDialog.setMessage("加载中");
         //留一份 加载进程
         cd = new TestDialog(this, R.style.CustomDialog);
+        try {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Happytalk");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+    }//ActionBar点击事件的方法，不用注册监听
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.menu_t1:
+                Toast.makeText(MainActivity.this,"设置",Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+
+        return super.onMenuOpened(featureId, menu);
     }
 
     private void init() {
@@ -129,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
 
                     default:
-                        Toast.makeText(MainActivity.this, "账号密码不能为空", Toast.LENGTH_LONG).show();
+                      Toast.makeText(MainActivity.this, "账号不存在", Toast.LENGTH_LONG).show();
                         //提示
                         break;
                 }

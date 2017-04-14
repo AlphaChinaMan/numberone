@@ -38,10 +38,11 @@
         <!--
      launchMode  :  启动模式
      screenOrientation   :
-    --> <activity
-        android:name=".MainActivity"
-        android:launchMode="singleTask"
-        android:screenOrientation="portrait"></activity>
+    -->
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".act.HomepageActivity"
             android:launchMode="singleTask"
@@ -54,7 +55,10 @@
             android:name=".act.PrivateMessageActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"></activity>
-
+        <activity
+            android:name=".act.CreatGroupActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
         <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"

@@ -22,7 +22,7 @@
         android:orientation="horizontal"
         android:paddingLeft="30dp"
         android:paddingRight="20dp"
-        android:visibility="gone" >
+         >
 
         <ImageView
             android:id="@+id/item_msg_left_img"
@@ -48,6 +48,12 @@
                 android:layout_height="wrap_content"
                 android:text="asds"
                 android:textColor="#00ff00" />
+            <ImageView
+                android:id="@+id/item_msg_left_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+  android:src="@mipmap/ic_launcher"
+                />
         </LinearLayout>
     </LinearLayout>
 
@@ -57,9 +63,10 @@
         android:layout_height="wrap_content"
         android:gravity="right"
         android:orientation="horizontal"
-        android:paddingLeft="50dp"
-        android:paddingRight="20dp"
-        android:visibility="gone" >
+        android:paddingLeft="20dp"
+        android:paddingRight="30dp"
+
+         >
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -70,7 +77,7 @@
                 android:id="@+id/item_msg_right_namee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:text="sfsgdsdgdfgdfhg"
                 android:gravity="right"
                 android:textColor="#ff0000" />
 
@@ -78,14 +85,20 @@
                 android:id="@+id/item_msg_right_context"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="asd"
+                android:text="asddfgggg"
                 android:textColor="#ff0000" />
+             <ImageView
+                 android:id="@+id/item_msg_right_image"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:src="@mipmap/ic_launcher"
+                 />
         </LinearLayout>
 
         <ImageView
             android:id="@+id/item_msg_right_img"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/wu" />
     </LinearLayout>
 </LinearLayout>

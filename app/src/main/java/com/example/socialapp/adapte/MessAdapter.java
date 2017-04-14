@@ -8,7 +8,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.socialapp.R;
+import com.hyphenate.chat.EMImageMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 
@@ -19,11 +21,9 @@ import java.util.List;
  * Created by 陈梦轩 on 2017/3/28.
  */
 
-public class MessAdapter extends BaseAdapter{
+public class MessAdapter extends BaseAdapter {
     private Context context;
     private List<EMMessage> list;
-    // TODD 暂时固定为自己的账号 需写成 用户类 来存放
-    private static final String MYUSER = "99999";
 
     // 构造方法 接受上下文 和数据源
     public MessAdapter(Context context, List<EMMessage> list) {
@@ -75,31 +75,84 @@ public class MessAdapter extends BaseAdapter{
     public void setViewContent(Holder holder, EMMessage emMessage) {
         // 设置控件的可见状态
         holder.item_msg_time_lay.setVisibility(View.VISIBLE);
-//获取时间
+        //获取时间
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm");
         holder.item_msg_time_textview.setText(dateFormat.format(emMessage.getMsgTime()));
-        // 判断消息的发送方式不是自己
-        if (MYUSER.equals(emMessage.getFrom())) {
-            holder.item_msg_right_lay.setVisibility(View.VISIBLE);
-            holder.item_msg_left_lay.setVisibility(View.GONE);
-            holder.item_msg_right_namee.setText(emMessage.getUserName());
-            // 获取消息对象中的消息体 并强转成 文本消息体
-            // TODD 需加其他消息类型
-            EMTextMessageBody txt = (EMTextMessageBody) emMessage.getBody();
-            holder.item_msg_right_context.setText(txt.getMessage());
-            holder.item_msg_right_namee.setText("浮生若梦");
+        EMMessage.Type type = emMessage.getType();
+             switch (type){
+                 case TXT:
+                     // 判断消息的发送方是不是自己
+                     if (emMessage.getFrom().equals(emMessage.getUserName())) {
+                         //如果不是自己
+                         holder.item_msg_right_lay.setVisibility(View.GONE);
+                         holder.item_msg_left_lay.setVisibility(View.VISIBLE);
+                         holder.item_msg_left_context.setVisibility(View.VISIBLE);
+                         holder.leftImage.setVisibility(View.GONE);
+                         // 获取消息对象中的消息体 并强转成 文本消息体
+                         // TODD 需加其他消息类型
+                         EMTextMessageBody txt = (EMTextMessageBody) emMessage.getBody();
+                         holder.item_msg_left_context.setText(txt.getMessage());
+                         //設置用戶名
+                         holder.item_msg_left_name.setText(emMessage.getUserName());
 
-        } else {
+                     } else {
+                         //是自己
+                         holder.item_msg_right_lay.setVisibility(View.VISIBLE);
+                         holder.item_msg_left_lay.setVisibility(View.GONE);
+                         holder.item_msg_right_context.setVisibility(View.VISIBLE);
+                         holder.reghtImage.setVisibility(View.GONE);
+                         holder.item_msg_right_namee.setText(emMessage.getUserName());
+                         // 获取消息对象中的消息体 并强转成 文本消息体
+                         // TODD 需加其他消息类型
+                         EMTextMessageBody txt = (EMTextMessageBody) emMessage.getBody();
+                         holder.item_msg_right_context.setText(txt.getMessage());
+                         holder.item_msg_right_namee.setText("浮生若梦");
+                     }
+                     break;
+                 case IMAGE:
+                     // 判断消息的发送方是不是自己
+                     if (emMessage.getFrom().equals(emMessage.getUserName())) {
+                         //如果不是自己
+                         holder.item_msg_right_lay.setVisibility(View.GONE);
+                         holder.item_msg_left_lay.setVisibility(View.VISIBLE);
+                         // 获取消息对象中的消息体 并强转成 文本消息体
+                         // TODD 需加其他消息类型
+                         holder.item_msg_left_context.setVisibility(View.GONE);
+                         holder.leftImage.setVisibility(View.VISIBLE);
+                         holder.item_msg_right_namee.setText(emMessage.getUserName());
+                         // 获取消息对象中的消息体 并强转成 文本消息体
+                         // TODD 需加其他消息类型
+                         EMImageMessageBody txt = (EMImageMessageBody) emMessage.getBody();
+                         //设置图片
+                         Glide.with(context)
+                                 .load(txt.getThumbnailUrl())
+                                 .override(200,300)
+                                 .into(holder.leftImage);
+                         //設置用戶名
+                         holder.item_msg_left_name.setText(emMessage.getUserName());
 
-            holder.item_msg_right_lay.setVisibility(View.GONE);
-            holder.item_msg_left_lay.setVisibility(View.VISIBLE);
-            // 获取消息对象中的消息体 并强转成 文本消息体
-            // TODD 需加其他消息类型
-            EMTextMessageBody txt = (EMTextMessageBody) emMessage.getBody();
-            holder.item_msg_left_context.setText(txt.getMessage());
-            //設置用戶名
-            holder.item_msg_left_name.setText(emMessage.getUserName());
-        }
+                     } else {
+                         //是自己
+                         holder.item_msg_right_lay.setVisibility(View.VISIBLE);
+                         holder.item_msg_left_lay.setVisibility(View.GONE);
+                         holder.item_msg_right_context.setVisibility(View.GONE);
+                         holder.reghtImage.setVisibility(View.VISIBLE);
+                         holder.item_msg_right_namee.setText(emMessage.getUserName());
+                         // 获取消息对象中的消息体 并强转成 文本消息体
+                         // TODD 需加其他消息类型
+                         holder.item_msg_right_namee.setText("浮生若梦");
+                         EMImageMessageBody txt = (EMImageMessageBody) emMessage.getBody();
+                         //设置图片
+                         Glide.with(context)
+                                 .load(txt.getLocalUrl())
+                                 .override(200,300)
+                                 .into(holder.reghtImage);
+
+                     }
+                     break;
+
+
+             }
 
     }// 存放空间的内部类
 
@@ -108,7 +161,7 @@ public class MessAdapter extends BaseAdapter{
         LinearLayout item_msg_time_lay, item_msg_left_lay, item_msg_right_lay;
         TextView item_msg_time_textview, item_msg_left_name, item_msg_left_context, item_msg_right_namee,
                 item_msg_right_context;
-        ImageView item_msg_right_img, item_msg_left_img;
+        ImageView item_msg_right_img, item_msg_left_img,leftImage,reghtImage;
 
         // 初始化控件的方法
         void setviews(View view) {
@@ -123,7 +176,12 @@ public class MessAdapter extends BaseAdapter{
             item_msg_right_namee = (TextView) view.findViewById(R.id.item_msg_right_namee);
             item_msg_left_context = (TextView) view.findViewById(R.id.item_msg_left_context);
             item_msg_right_context = (TextView) view.findViewById(R.id.item_msg_right_context);
-        };
+
+            leftImage= (ImageView) view.findViewById(R.id.item_msg_left_image);
+            reghtImage= (ImageView) view.findViewById(R.id.item_msg_right_image);
+        }
+
+
     }
 
 }

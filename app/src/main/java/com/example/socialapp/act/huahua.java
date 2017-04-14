@@ -19,7 +19,7 @@ import java.util.List;
 
 public class huahua extends AppCompatActivity{
     private ListView listView;
-private List<String> list=new ArrayList<>();
+    private List<String> list=new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/lavender"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_weight="5"
+            android:id="@+id/name_edit_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxEms="15"
+            android:hint="请输入群名称"/>
+
+        <Button
+            android:layout_weight="1"
+            android:text="创建群"
+            android:id="@+id/creat_button_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

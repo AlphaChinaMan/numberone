@@ -1,27 +1,31 @@
 package com.example.socialapp.adapte;
 
-        import android.content.Context;
-        import android.support.v7.widget.RecyclerView;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.ImageView;
-        import android.widget.TextView;
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-        import com.example.socialapp.R;
-        import com.example.socialapp.ben.info;
+import com.example.socialapp.R;
+import com.example.socialapp.act.PrivateMessageActivity;
+import com.example.socialapp.ben.info;
+import com.hyphenate.chat.EMGroup;
 
-        import java.util.List;
+import java.util.List;
 
 /**
  * Created by 陈梦轩 on 2017/3/23.
  */
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyVieqHolder> {
-    private List<info> list;
+    private List<EMGroup> list;
     private Context context;
 
-    public ContactsAdapter(Context context, List<info> list) {
+    //构造方法  接受上下文和数据源
+    public ContactsAdapter(Context context, List<EMGroup> list) {
         super();
         this.context = context;
         this.list = list;
@@ -35,14 +39,29 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.MyVieq
     }
 
     @Override
-    public void onBindViewHolder(MyVieqHolder holder, int position) {
-
+    public void onBindViewHolder(MyVieqHolder holder, final int position) {
+        //获取当前item的值
+        EMGroup group = list.get(position);
+        //给空间设置数据
+        String groupName = group.getGroupName();
+        holder.text_news_name_item_friends.setText(groupName);
+        holder.text_news_content_item.setText("");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                EMGroup emGroup = list.get(position);
+                String groupId = emGroup.getGroupId();
+                //
+                intent2To(PrivateMessageActivity.class, groupId);
             }
         });
+
+    }
+
+    private void intent2To(Class<?> cls, String groupId) {
+        Intent intent = new Intent(context, cls);
+        intent.putExtra("groupId", groupId);
+        context.startActivity(intent);
 
     }
 

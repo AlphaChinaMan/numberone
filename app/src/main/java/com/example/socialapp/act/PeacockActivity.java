@@ -87,7 +87,6 @@ public class PeacockActivity extends AppCompatActivity {
      *   在onBackPressed（）设置resultCode  在上一个Activity 的OnActivityResult（）中验证；
      *
      * */
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
