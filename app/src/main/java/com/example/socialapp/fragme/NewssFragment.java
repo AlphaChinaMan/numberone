@@ -1,6 +1,5 @@
 package com.example.socialapp.fragme;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,7 +16,6 @@ import com.example.socialapp.R;
 import com.example.socialapp.adapte.CharlistAdapter;
 import com.example.socialapp.inface.ListitemonClick;
 import com.hyphenate.EMCallBack;
-import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMConversationListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
@@ -171,7 +169,6 @@ public class NewssFragment extends Fragment implements EMCallBack, EMConversatio
         cla.setListitemonClick(this);
     }
 
-    ;
 
     @Override
     public void onCoversationUpdate() {

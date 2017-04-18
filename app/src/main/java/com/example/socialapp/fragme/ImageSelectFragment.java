@@ -69,6 +69,7 @@ public class ImageSelectFragment extends Fragment implements View.OnClickListene
                 HashSet<String> checkList = adapter.getCheckList();
                 //获取容器activity对象
                 PrivateMessageActivity ma = (PrivateMessageActivity) getActivity();
+                //遍历逐个拿到路径，
                 for (String str : checkList) {
                     Log.e("checkList", str);
                     ma.sendImage(str,false);

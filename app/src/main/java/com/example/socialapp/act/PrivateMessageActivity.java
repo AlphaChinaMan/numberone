@@ -1,11 +1,15 @@
 package com.example.socialapp.act;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.os.EnvironmentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -31,10 +35,15 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.R.id.list;
+import static android.provider.MediaStore.ACTION_IMAGE_CAPTURE;
 
 
 /**
@@ -47,14 +56,15 @@ public class PrivateMessageActivity extends AppCompatActivity implements EMCallB
     private Button sendbtn, button11, button22, button33;
     private TextView message_title_right, titleName;
     private String username;
-    private List<EMMessage> message;
+    private List<EMMessage> list;
     private MessAdapter messageAdapter;
     private String groupId;
     private FragmentTransaction transaction;
     private ImageSelectFragment imgFragment;
     private FragmentManager fragmentManager;
     private GoogleApiClient client;
-
+    private final static int IMAGE_CODE = 1001;
+    private   File file;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +98,7 @@ public class PrivateMessageActivity extends AppCompatActivity implements EMCallB
 
     private void initView() {
         button11 = (Button) findViewById(R.id.button11);
+        button22 = (Button) findViewById(R.id.button22);
         titleName = (TextView) findViewById(R.id.message_title_name);
         textedit = (EditText) findViewById(R.id.private_message_edittext);
         msgShowlist = (ListView) findViewById(R.id.private_message_listview);
@@ -98,6 +109,7 @@ public class PrivateMessageActivity extends AppCompatActivity implements EMCallB
         sendbtn.setOnClickListener(this);
         message_title_right.setOnClickListener(this);
         button11.setOnClickListener(this);
+        button22.setOnClickListener(this);
     }
 
     @Override
@@ -110,7 +122,7 @@ public class PrivateMessageActivity extends AppCompatActivity implements EMCallB
 
     private void initlistview() {
         initDate();
-        messageAdapter = new MessAdapter(this, message);
+        messageAdapter = new MessAdapter(this, list);
         msgShowlist.setAdapter(messageAdapter);
     }
 
@@ -119,13 +131,15 @@ public class PrivateMessageActivity extends AppCompatActivity implements EMCallB
         // 获取聊天记录
         if (TextUtils.isEmpty(groupId)) {
             EMConversation conversation = EMClient.getInstance().chatManager().getConversation(username);
-            message = conversation.getAllMessages();
+            //获取此会话的所有消息
+            list = conversation.getAllMessages();
         } else {
             EMConversation conversation = EMClient.getInstance().chatManager().getConversation(groupId);
             if (conversation != null) {
-                message = conversation.getAllMessages();
+                //获取此会话的所有消息
+                list = conversation.getAllMessages();
             } else {
-                message = new ArrayList<EMMessage>();
+                list = new ArrayList<EMMessage>();
             }
         }
 //        EMConversation conversation =
@@ -179,7 +193,7 @@ public class PrivateMessageActivity extends AppCompatActivity implements EMCallB
     }
 
     @Override
-    public void onMessageReadAckReceived(final List<EMMessage> list) {
+    public void onMessageReadAckReceived(List<EMMessage> list) {
 
     }
 
@@ -187,6 +201,7 @@ public class PrivateMessageActivity extends AppCompatActivity implements EMCallB
     public void onMessageDeliveryAckReceived(List<EMMessage> list) {
 
     }
+
 
     @Override
     public void onMessageChanged(EMMessage emMessage, Object o) {
@@ -231,8 +246,59 @@ public class PrivateMessageActivity extends AppCompatActivity implements EMCallB
                     transaction.commit();
                 }
                 break;
+            case R.id.button22:
+                Intent intent = new Intent(ACTION_IMAGE_CAPTURE);
+              file=new File(Environment.getDataDirectory()
+                        .getAbsolutePath()+"/"
+                        +System.currentTimeMillis()
+                        +".jpg");
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(file));
+                startActivityForResult(intent,IMAGE_CODE );
+                break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case IMAGE_CODE:
+                if(resultCode==RESULT_OK){
+                    //拿到carera拍照后的图片
+                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                    //创建文件对象
+                    File file=new File(Environment
+                            .getExternalStorageDirectory()
+                            ,System.currentTimeMillis()+".jpg");
+                    try {
+                        //开启这个文件输出流
+                        FileOutputStream out=new FileOutputStream(file);
+                        //把Bitmap内容写入输出流
+                        bitmap.compress(Bitmap.CompressFormat.JPEG,90,out);
+                        try {
+                            //刷新输出流
+                            out.flush();
+                            //关闭输出流
+                            out.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+                    Toast.makeText(this,file.getAbsolutePath(),Toast.LENGTH_SHORT).show();
+                    sendImage(file.getAbsolutePath(),false);
+
+                }
+            break;
         }
     }
 
@@ -244,6 +310,7 @@ public class PrivateMessageActivity extends AppCompatActivity implements EMCallB
      * @param isThumbnail 是否发送原图  true 原图  false 缩略图
      */
     public void sendImage(String imgPath, boolean isThumbnail) {
+        //创建图片Image消息
         EMMessage message = EMMessage.createImageSendMessage(imgPath, isThumbnail, username);
         sendMessage(message);
 
@@ -282,18 +349,20 @@ public class PrivateMessageActivity extends AppCompatActivity implements EMCallB
         EMClient.getInstance()
                 .chatManager()
                 .sendMessage(message1);
-        //图片发送之后 关闭图片选择fragment
+        //图片发送之后 关闭图片选择fragment图片选择器
         if (imgFragment.isAdded()) {
             closeImgFragment();
         }
-        message.add(message1);
+        list.add(message1);
 
-        //调用刷新消息列表的方法
+        //调用刷新消息列表的方法messageActivity
         messageAdapter.notifyDataSetChanged();
+        //调用刷新列表的方法  chatlist
+        //MessageManager.getInsatance().getMessageListListener().refChatList();
     }
 
     public void addSendMsg2list(EMMessage messages) {
-        message.add(messages);
+        list.add(messages);
         messageAdapter.notifyDataSetChanged();
         msgShowlist.setSelection(msgShowlist.getBottom());
     }

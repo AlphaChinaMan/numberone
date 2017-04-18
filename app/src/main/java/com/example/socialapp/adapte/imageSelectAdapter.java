@@ -38,17 +38,20 @@ public class imageSelectAdapter extends RecyclerView.Adapter<imageSelectAdapter.
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+      //  显示所有图片
 final String path=list.get(position);
         //设置图片
-        Glide.with(context).load(path).override(300,200).into(holder.img);
+        Glide.with(context).load(path).override(200,400).into(holder.img);
         //设置复选框监听
         //把选中的存入集合中
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
+                    //如果被选中
                     checkList.add(path);
                 }else{
+                    //如果没选中
                     checkList.remove(path);
                 }
             }
