@@ -42,4 +42,5 @@ dependencies {
     compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.5'
     compile files('libs/hyphenatechat_3.2.2.jar')
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
+    compile 'org.wlf:FileDownloader:0.3.1'
 }

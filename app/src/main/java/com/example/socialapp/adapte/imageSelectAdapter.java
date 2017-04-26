@@ -24,6 +24,7 @@ public class imageSelectAdapter extends RecyclerView.Adapter<imageSelectAdapter.
     private ArrayList<String> list;
     //被选中图片的数据源
     private HashSet<String> checkList = new HashSet<>();
+
     public imageSelectAdapter(Context context, ArrayList<String> list) {
         this.context = context;
         this.list = list;
@@ -31,26 +32,26 @@ public class imageSelectAdapter extends RecyclerView.Adapter<imageSelectAdapter.
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-     View view= LayoutInflater.from(context).inflate(R.layout.item_image_select,parent,false);
-        MyViewHolder mvh=new MyViewHolder(view);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_image_select, parent, false);
+        MyViewHolder mvh = new MyViewHolder(view);
         return mvh;
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-      //  显示所有图片
-final String path=list.get(position);
+        //  显示所有图片
+        final String path = list.get(position);
         //设置图片
-        Glide.with(context).load(path).override(200,400).into(holder.img);
+        Glide.with(context).load(path).override(200, 400).into(holder.img);
         //设置复选框监听
         //把选中的存入集合中
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     //如果被选中
                     checkList.add(path);
-                }else{
+                } else {
                     //如果没选中
                     checkList.remove(path);
                 }
@@ -62,9 +63,10 @@ final String path=list.get(position);
     public int getItemCount() {
         return list.size();
     }
-public  HashSet<String> getCheckList(){
-    return  checkList;
-}
+
+    public HashSet<String> getCheckList() {
+        return checkList;
+    }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView img;

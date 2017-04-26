@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.socialapp.MainActivity;
 import com.example.socialapp.R;
 import com.hyphenate.chat.EMChatManager;
+import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.adapter.EMACallManager;
 
 /**
@@ -59,6 +60,7 @@ public class SetFragment extends Fragment implements View.OnClickListener {
                     public void onClick(DialogInterface dialog, int which) {
                         Intent i = new Intent(getActivity(), MainActivity.class);
                         startActivity(i);
+
                     }
                 });
                 a.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -73,5 +75,11 @@ public class SetFragment extends Fragment implements View.OnClickListener {
 
 
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EMClient.getInstance().logout(true);
     }
 }

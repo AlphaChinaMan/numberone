@@ -59,6 +59,12 @@
             android:name=".act.CreatGroupActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".act.VideoActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+
+
+
         <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
